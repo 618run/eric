@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="renderer" content="webkit">
+    <title>星星评级</title>
+    <meta name="keywords" content="星星评级">
+    <meta name="description" content="星星评级">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+
+<body>
+	<div class="rate-layer">
+	    <div class="rate-content">
+	        <p>
+	            <input type="hidden" name="jhty-data" value="0"><span>交互体验</span><i></i><i></i><i></i><i></i><i></i></p>
+	        <p>
+	            <input type="hidden" name="flyh-data" value="0"><span>返利优惠</span><i></i><i></i><i></i><i></i><i></i></p>
+	        <p>
+	            <input type="hidden" name="zfsd-data" value="0"><span>支付速度</span><i></i><i></i><i></i><i></i><i></i></p>
+	        <p>
+	            <input type="hidden" name="jssd-data" value="0"><span>结算速度</span><i></i><i></i><i></i><i></i><i></i></p>
+	        <p>
+	            <input type="hidden" name="tqsd-data" value="0"><span>提取速度</span><i></i><i></i><i></i><i></i><i></i></p>
+	    </div>
+	    <div class="rate-submit">确定</div>
+	    <div class="rate-desc">
+	    </div>
+    </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript">
+    	//确定评级
+        $("body").on("click", ".rate-layer .rate-submit", function () {
+            var $rateLayer = $(this).closest(".rate-layer");
+
+            var jhtyData = $rateLayer.find("input[name='jhty-data']").val();
+            var flyhData = $rateLayer.find("input[name='flyh-data']").val();
+            var zfsdData = $rateLayer.find("input[name='zfsd-data']").val();
+            var jssdData = $rateLayer.find("input[name='jssd-data']").val();
+            var tqsdData = $rateLayer.find("input[name='tqsd-data']").val();
+
+            var html='';
+            html="确定评级--" + "交互体验：" + jhtyData + "---返利优惠：" + flyhData + "---支付速度：" + zfsdData + "---结算速度：" + jssdData + "---提取速度：" + tqsdData;
+            $(".rate-desc").html(html);
+        });
+
+    	$("body").on("mouseover", ".rate-layer .rate-content i", function () {
+            var $self = $(this);
+            var parent = $self.parent();
+            var star = parent.find('i');
+            var starLength = star.length;
+            clear(star, starLength);
+            var temp = 0;
+            parent.find("input").val(0);
+            for (var i = 0; i < starLength; i++) {
+                star[i].index = i;
+                for (var j = 0; j < this.index + 1; j++) {
+                    $(star[j]).css("background-position", "0 -18px")
+                }
+
+                star[i].onmouseout = function () {
+                    for (var j = 0; j < this.index + 1; j++) {
+                        $(star[j]).css("background-position", "0 0")
+                    }
+                    current(star, temp);
+                };
+
+                star[i].onclick = function () {
+                    temp = this.index + 1;
+                    parent.find("input").val(temp);
+                    current(star, temp);
+                }
+            }
+        });
+
+        //清除所有
+        function clear(star, starLength) {
+            for (var i = 0; i < starLength; i++) {
+                $(star[i]).css("background-position", "0 0");
+            }
+        }
+
+        //显示当前第几颗星
+        function current(star, temp) {
+            for (var i = 0; i < temp; i++) {
+                $(star[i]).css("background-position", "0 -18px");
+            }
+        }
+    </script>
+</body>
+
+</html>
