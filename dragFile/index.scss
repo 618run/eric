@@ -1,0 +1,26 @@
+#drop_area {
+	border:2px dashed #BBB;
+	padding:25px 5px;
+	text-align:center;
+	font-size:20pt;
+	color:#BBB;
+	border-radius:5px;
+	.hovering {
+		-webkit-box-shadow:inset 0px 0px 50px #BBB;
+		-moz-box-shadow:inset 0px 0px 50px #BBB;
+		-o-box-shadow:inset 0px 0px 50px #BBB;
+		box-shadow:inset 0px 0px 50px #BBB;
+	}
+}
+
+.example {
+	margin:40px 25px;
+	padding:10px;
+	border:1px solid #BBB;
+}
+#preview {
+	text-align:left;
+	li {
+		margin:10px 0;
+	}
+}
