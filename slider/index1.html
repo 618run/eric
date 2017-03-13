@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="renderer" content="webkit">
+	<title>jQuery实现无缝图片滚动效果</title>
+	<meta name="keywords" content="jQuery实现无缝图片滚动效果">
+    <meta name="description" content="jQuery实现无缝图片滚动效果">
+    <link rel="stylesheet" type="text/css" href="./index1.css">
+</head>
+<body>
+	<div class="operation">
+		<a href="javascript:;" class="goLeft">向左走</a> <a href="javascript:;" class="goRight">向右走</a>
+	</div>
+	<div class="wrap">
+	  <ul>
+	    <li>slider1</li>
+	    <li>slider2</li>
+	    <li>slider3</li>
+	    <li>slider4</li>
+	    <li>slider5</li>
+	  </ul>
+	</div> 
+
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript">
+		// 如果想要使一个元素运动起来，一般情况下这个元素须要具有position属性absolute/relative
+		$(function(){
+			var oul = $('.wrap ul');
+			var oulHtml = oul.html();
+			oul.html(oulHtml+oulHtml)
+			var timeId = null;
+
+			var ali = $('.wrap ul li');
+			var aliWidth = ali.eq(0).width();
+			var aliSize = ali.size();
+			var ulWidth = aliWidth*aliSize;
+			oul.width(ulWidth);	//1600px
+			
+			var speed = 2;
+
+			function slider(){
+
+				if(speed<0){
+					if(oul.css('left')==-ulWidth/2+'px'){
+			 		oul.css('left',0);
+				 	}
+				 	oul.css('left','+=-2px');
+				}
+
+			 	
+				if(speed>0){
+					if(oul.css('left')=='0px'){
+			 		oul.css('left',-ulWidth/2+'px');
+				 	}
+				 	oul.css('left','+='+speed+'px');
+				}
+			 	
+			 }
+			
+			// setInterval()函数的作用是：每隔一段时间，执行该函数里的代码
+			 timeId = setInterval(slider,30);
+
+			$('.wrap').mouseover(function(){
+				// clearInterval()函数的作用是用来清除定时器
+				clearInterval(timeId);
+			});
+
+			$('.wrap').mouseout(function(){
+				timeId = setInterval(slider,30);
+			});
+
+			$('.goLeft').click(function(){
+				speed=-2;
+			});
+
+			$('.goRight').click(function(){
+				speed=2;
+			});
+
+		});
+	</script>
+</body>
+</html>
