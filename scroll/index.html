@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta name="renderer" content="webkit">
+    <title>jQuery多行文字滚动</title>
+    <meta name="keywords" content="jQuery多行文字滚动">
+    <meta name="description" content="jQuery多行文字滚动">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+</head>
+
+<body>
+    <div id="scrollDiv">
+        <table>
+            <tr>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    这是公告标题的第3行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    这是公告标题的第33行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    这是公告标题的第33行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+                <td>
+                    这是公告标题的第35行
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript">
+    (function($) {
+        $.fn.extend({
+            Scroll: function(opt, callback) {
+                //参数初始化
+                if (!opt) var opt = {};
+                var _this = this.eq(0).find("table:first");
+                var lineH = _this.find("tr:first").height(),
+                    //获取行高
+                    line = opt.line ? parseInt(opt.line, 10) : parseInt(this.height() / lineH, 10),
+                    //每次滚动的行数，默认为一屏，即父容器高度
+                    speed = opt.speed ? parseInt(opt.speed, 10) : 1000,
+                    //卷动速度，数值越大，速度越慢（毫秒）
+                    timer = opt.timer ? parseInt(opt.timer, 10) : 5000; //滚动的时间间隔（毫秒）
+                if (line == 0) line = 1;
+                var upHeight = 0 - line * lineH;
+                //滚动函数
+                scrollUp = function() {
+                        _this.animate({
+                                marginTop: upHeight
+                            },
+                            speed,
+                            function() {
+                                for (i = 1; i <= line; i++) {
+                                    _this.find("tr:first").appendTo(_this);
+                                }
+                                _this.css({
+                                    marginTop: 0
+                                });
+                            });
+                    }
+                    //鼠标事件绑定
+                _this.hover(function() {
+                        clearInterval(timerID);
+                    },
+                    function() {
+                        timerID = setInterval("scrollUp()", timer);
+                    }).mouseout();
+            }
+        })
+    })(jQuery);
+
+    $(function(){
+    	$("#scrollDiv").Scroll({
+            line: 4,
+            speed: 1000,
+            timer: 3000
+        });
+    })
+
+    </script>
+</body>
+
+</html>
